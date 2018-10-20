@@ -7,3 +7,17 @@ Major Bugs:
 Minor Issues:
 
 Minor Bugs:
+
+---- OTHER ----
+Notes:
+
+Goals:
+-Want to encompass everything into a user-friendly dict, like python
+-Want to have control like a vector also
+-overload [] operators to access keys easily both by string and int
+-implement a precise clock
+
+
+Current Goal:
+Setup Double hash
+setupf ind
