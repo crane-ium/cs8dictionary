@@ -41,14 +41,15 @@ public:
     Dictionary(const Dictionary& copy);
     Dictionary<K,V>& operator =(const Dictionary& copy);
     //MOD MEMBER FUNCTIONS
-    void insert(const K& key, const V& val);
+    bool insert(const K& key, const V& val);
         //searches for key, and if found, places it in val
     bool find(const K& key, V& val) const;
     bool find(const K& key) const;
+    operator size_t() const;
     //FRIEND MEMBMER FUNCTIONSS;AFDS
     template<class U, class T>
     friend ostream& operator <<(ostream& outs, const Dictionary<U,T>& dict);
-private:
+protected:
     size_t _hash_size, _indeces; //hash_size better be prime or u have problems
         //Stores data in array of dictnode pointers so u can check for NULL
         // rather than using a 2nd array to check
@@ -76,10 +77,10 @@ Dictionary<K,V>::Dictionary(const Dictionary &copy)
         : _hash_size(copy._hash_size), _indeces(copy._indeces){
     this->data = new dictnode<K,V>*[_hash_size];
     for(size_t i = 0; i < copy._hash_size; i++){
-        if(copy.data[i] != NULL)
+        if(copy.data[i] != NULL){
             this->data[i] = new dictnode<K,V>(
                     copy.data[i]->key, copy.data[i]->data);
-        else
+        }else
             this->data[i] = NULL;
     }
 }
@@ -91,10 +92,11 @@ Dictionary<K,V>& Dictionary<K,V>::operator =(const Dictionary<K,V>& copy){
     swap(this->_hash_size,temp._hash_size);
     swap(this->_indeces, temp._indeces);
     swap(this->data, temp.data);
+    return (*this);
 }
 
 template<class K, class V>
-void Dictionary<K,V>::insert(const K &key, const V &val){
+bool Dictionary<K, V>::insert(const K &key, const V &val){
     size_t index = hash_f(key);
     size_t current_i;
     for(size_t i = 0; i < _hash_size; i++){
@@ -105,11 +107,12 @@ void Dictionary<K,V>::insert(const K &key, const V &val){
             dictnode<K,V>* new_dn = new dictnode<K,V>(key,val);
             delete data[current_i];
             data[current_i] = new_dn;
-            return;
+            _indeces++;
+            return true;
         }
     }
     //Reaches end means no space for new data
-    cout << "Error: No space\n";
+    return false;
 }
 
 template<class K, class V>
@@ -147,5 +150,9 @@ ostream& operator <<(ostream& outs, const Dictionary<K,V>& dict){
     return outs;
 }
 
+template<class K, class V>
+Dictionary<K,V>::operator size_t() const{
+    return _indeces;
+}
 
 #endif // DICTIONARY_H

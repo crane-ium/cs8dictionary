@@ -5,6 +5,7 @@ Major Bugs:
 
 ---- MINOR ----
 Minor Issues:
+-Can't get inhereted big3 to efficiently use the base class big3
 
 Minor Bugs:
 
@@ -20,4 +21,5 @@ Goals:
 
 Current Goal:
 Setup Double hash
+Setup inheritance
 setupf ind
