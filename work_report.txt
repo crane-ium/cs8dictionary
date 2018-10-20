@@ -1,11 +1,12 @@
 ---- MAJOR ----
 Major Issues:
+-Double Hash is taking way longer to find than open hash
 
 Major Bugs:
 
 ---- MINOR ----
 Minor Issues:
--Can't get inhereted big3 to efficiently use the base class big3
+-Want to solve to get string auto parsed into size_t for easy hashing
 
 Minor Bugs:
 
@@ -15,11 +16,10 @@ Notes:
 Goals:
 -Want to encompass everything into a user-friendly dict, like python
 -Want to have control like a vector also
--overload [] operators to access keys easily both by string and int
--implement a precise clock
-
+-overload [] operators to access keys easily both by string
 
 Current Goal:
+Add a clock timer
 Setup Double hash
 Setup inheritance
 setupf ind
