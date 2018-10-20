@@ -2,6 +2,7 @@
 #include "dictionary.h"
 #include "../prime_generator/prime_generator.h"
 #include "doublehash.h"
+//#include
 
 using namespace std;
 
@@ -52,6 +53,12 @@ int main()
     cout << dh2[200] << endl;
     dh2[200] = "new value";
     cout << dh2[200] << endl;
-    cout << dh2[201] << endl;
+    try{
+        cout << dh2[201] << endl;
+    }catch(exception& e){
+        cout << "Oops\n" << e.what()<<endl;
+    }
+
+
     return 0;
 }

@@ -21,6 +21,9 @@ public:
     size_t find(const K& key, V &val) const;
     size_t find(const K& key) const;
     V& operator [](const K& key);
+    struct KeyException: public exception{
+        const char* what() const throw(){return "Undefined Key";}
+    };
 protected:
     size_t _hash_d;
 //    size_t hash_f(const K &key) const; //Hash based off of the hash_size
@@ -102,8 +105,7 @@ size_t DoubleHash<K,V>::check_data(const K& key, V& val) const{
             return current_i;
         }
     }
-    throw; //throw an error for checking invalid key
-    return -1; // did not find key
+    throw KeyException(); //throw an error for checking invalid key
 }
 
 template<class K, class V>
