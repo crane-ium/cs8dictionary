@@ -5,6 +5,7 @@
  * --This should speed up hash and access times
  * */
 
+#include <exception>
 #include "dictionary.h"
 
 template<class K, class V>
@@ -16,14 +17,16 @@ public:
     DoubleHash(const DoubleHash<K,V>& copy);
     DoubleHash<K,V>& operator =(const DoubleHash<K,V>& copy);
     //MOD MEMBER FUNCTOINS
-    bool insert(const K &key, const V& val);
-    bool find(const K& key, V &val) const;
-    bool find(const K& key) const;
+    size_t insert(const K &key, const V& val);
+    size_t find(const K& key, V &val) const;
+    size_t find(const K& key) const;
+    V& operator [](const K& key);
 protected:
     size_t _hash_d;
 //    size_t hash_f(const K &key) const; //Hash based off of the hash_size
     size_t dhash_f(const K& key) const; //hsah of _hash_d
     void change_data(const size_t& i, dictnode<K,V>*& dn); //changes data at i
+    size_t check_data(const K& key, V& val) const;
 };
 
 template<class K, class V>
@@ -49,7 +52,7 @@ size_t DoubleHash<K,V>::dhash_f(const K& key) const{
 }
 
 template<class K, class V>
-bool DoubleHash<K,V>::insert(const K &key, const V &val){
+size_t DoubleHash<K,V>::insert(const K &key, const V &val){
     size_t current_i;
     K k_c = key; //key current
     for(size_t i = 0; i < this->_hash_size; i++){
@@ -59,21 +62,22 @@ bool DoubleHash<K,V>::insert(const K &key, const V &val){
         if(this->data[current_i] == NULL || this->data[current_i]->key == key){
             dictnode<K,V>* new_node = new dictnode<K,V>(key, val);
             change_data(current_i, new_node);
-            return true;
+            return current_i;
         }
     }
     //end means there was no space left
-    return false;
+    return -1;
 }
 
 template<class K, class V>
-bool DoubleHash<K,V>::find(const K& key, V& val) const{
-
+size_t DoubleHash<K,V>::find(const K& key, V& val) const{
+    return check_data(key,val);
 }
 
 template<class K, class V>
-bool DoubleHash<K,V>::find(const K& key) const{
-
+size_t DoubleHash<K,V>::find(const K& key) const{
+    V temp;
+    return check_data(key,temp);
 }
 
 template<class K, class V>
@@ -83,5 +87,27 @@ void DoubleHash<K,V>::change_data(const size_t& i, dictnode<K,V>*& dn){
     delete this->data[i];
     this->data[i] = dn;
     this->_indeces++;
+}
+
+template<class K, class V>
+size_t DoubleHash<K,V>::check_data(const K& key, V& val) const{
+    //changes based on using an open vs chained hash
+    //Since this is open hash, we will check every index until the
+    // array is exhausted
+    size_t current_i;
+    for(size_t i = 0; i < this->_hash_size; i++){
+        current_i = dhash_f((K)current_i);
+        if(this->data[current_i] != NULL && this->data[current_i]->key == key){
+            val = this->data[current_i]->data;
+            return current_i;
+        }
+    }
+    throw; //throw an error for checking invalid key
+    return -1; // did not find key
+}
+
+template<class K, class V>
+V& DoubleHash<K,V>::operator [](const K& key){
+    return this->data[find(key)]->data;
 }
 #endif // DOUBLEHASH_H

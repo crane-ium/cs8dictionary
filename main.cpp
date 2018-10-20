@@ -44,11 +44,14 @@ int main()
     dh2.insert(13, "13");
     dh2.insert(65, "65");
     dh2.insert(3, "3");
-    dh2.insert(200, "200");
+    dh2.insert(200, "two-hundred");
     dh2.insert(150, "150");
     dh2.insert(55, "OVERFLOW");
     cout << dh2 << endl;
     cout << (int)dh2 << endl;
-
+    cout << dh2[200] << endl;
+    dh2[200] = "new value";
+    cout << dh2[200] << endl;
+    cout << dh2[201] << endl;
     return 0;
 }
