@@ -1,6 +1,8 @@
 ---- MAJOR ----
 Major Issues:
--Double Hash is taking way longer to find than open hash
+-Is double hash fast enough??? It's roughly the same speed except
+ that double hash has some more complexities going on that might slow it
+
 
 Major Bugs:
 

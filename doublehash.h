@@ -6,10 +6,10 @@
  * */
 
 #include <exception>
-#include "dictionary.h"
+#include "openhash.h"
 
 template<class K, class V>
-class DoubleHash: public Dictionary<K,V>{
+class DoubleHash: public OpenHash<K,V>{
 public:
     DoubleHash(size_t l=811, size_t m=809);
     //Big3
@@ -37,17 +37,17 @@ protected:
 
 template<class K, class V>
 DoubleHash<K,V>::DoubleHash(size_t l, size_t m)
-        : Dictionary<K,V>(l){
+        : OpenHash<K,V>(l){
 }
 
 template<class K, class V>
 DoubleHash<K,V>::DoubleHash(const DoubleHash<K, V> &copy)
-        : Dictionary<K,V>(copy){
+        : OpenHash<K,V>(copy){
 }
 
 template<class K, class V>
 DoubleHash<K,V>& DoubleHash<K,V>::operator =(const DoubleHash<K, V> &copy){
-    Dictionary<K,V>::operator=(copy);
+    OpenHash<K,V>::operator=(copy);
     return (*this);
 }
 

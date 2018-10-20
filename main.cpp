@@ -1,5 +1,5 @@
 #include <iostream>
-#include "dictionary.h"
+#include "openhash.h"
 #include "../prime_generator/prime_generator.h"
 #include "doublehash.h"
 #include "Windows.h"
@@ -12,7 +12,7 @@ int main()
 {
     prime_generator gen;
     long int prime = gen.get_prime(1000);
-    Dictionary<int,string> dict(prime);
+    OpenHash<int,string> dict(prime);
     DoubleHash<int,string> dh(11,13);
 
     dict.insert(5,"data1");
@@ -24,16 +24,16 @@ int main()
     cout << dict.find(1500,data) << ": " << data << endl;
     cout << dict << "Done with first dict\n";
 
-    Dictionary<int,string> aDict(dict);
+    OpenHash<int,string> aDict(dict);
     cout << aDict << endl;
     aDict.insert(200500, "YUUUGE KEY");
     cout << aDict << endl;
-    Dictionary<int, string> bDict;
+    OpenHash<int, string> bDict;
     bDict = aDict;
     bDict.insert(103, ":)");
     cout << bDict << endl;
 
-//    dh = dynamic_cast<Dictionary<int,string> >(aDict);
+//    dh = dynamic_cast<OpenHash<int,string> >(aDict);
     dh.insert(100, "doublehash");
     cout << dh << endl;
     DoubleHash<int,string> dh2(11,13);
@@ -75,7 +75,7 @@ int main()
     srand(time(NULL)); //comment out to make it repeatable tests
     for(size_t i = 0; i < iterations; i++)
         randkeys[i] = rand();
-    Dictionary<int,string> open_test(prime1);
+    OpenHash<int,string> open_test(prime1);
     DoubleHash<int,string> double_test(prime1, prime2);
     //TEST OPEN HASH
     QueryPerformanceFrequency(&frequency);
@@ -117,7 +117,7 @@ int main()
     dh4[100] = "test2";
     dh4[1] = "Retest";
     dh4[3] = "no dupe";
-    dh4[4];
+    dh4[4]; //set a blank data
     cout << dh4;
 
     return 0;
