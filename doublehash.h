@@ -28,44 +28,39 @@ public:
         const char* what() const throw(){return "Undefined Key";}
     };
 protected:
-    size_t _hash_d;
 //    size_t hash_f(const K &key) const; //Hash based off of the hash_size
-    size_t dhash_f(const K& key, const size_t& i) const; //hsah of _hash_d
+    size_t dhash_f(const K& key) const; //hsah for the twin relative prime
     void change_data(const size_t& i, dictnode<K,V>*& dn); //changes data at i
-    size_t check_data(const K& key, V& val) const;
+    size_t check_data(const K& key, V& val) const; //used to find key, returns index
+
 };
 
 template<class K, class V>
 DoubleHash<K,V>::DoubleHash(size_t l, size_t m)
-        : Dictionary<K,V>(l), _hash_d(m){
+        : Dictionary<K,V>(l){
 }
 
 template<class K, class V>
 DoubleHash<K,V>::DoubleHash(const DoubleHash<K, V> &copy)
-        : Dictionary<K,V>(copy), _hash_d(copy._hash_d){
+        : Dictionary<K,V>(copy){
 }
 
 template<class K, class V>
 DoubleHash<K,V>& DoubleHash<K,V>::operator =(const DoubleHash<K, V> &copy){
     Dictionary<K,V>::operator=(copy);
-    _hash_d = copy._hash_d;
     return (*this);
 }
 
 template<class K, class V>
-size_t DoubleHash<K,V>::dhash_f(const K& key, const size_t& i) const{
-    return (this->hash_f(key) + i*_hash_d) % this->_hash_size;
+size_t DoubleHash<K,V>::dhash_f(const K& key) const{
+    return 1 + ((size_t)key % (this->_hash_size - 2));
 }
 
 template<class K, class V>
 size_t DoubleHash<K,V>::insert(const K &key, const V &val){
     size_t current_i = 0;
-    K k_c = key; //key current
     for(size_t i = 0; i < this->_hash_size; i++){
-        current_i = dhash_f(key, current_i);
-//        k_c = (K)dhash_f(k_c);
-//        current_i = (this->hash_f(key) + i*_hash_d) % this->_hash_size;
-//        current_i = (size_t)k_c;
+        current_i = (this->hash_f(key) + i*dhash_f(key)) % this->_hash_size;
         if(this->data[current_i] == NULL || this->data[current_i]->key == key){
             dictnode<K,V>* new_node = new dictnode<K,V>(key, val);
             change_data(current_i, new_node);
@@ -103,7 +98,7 @@ size_t DoubleHash<K,V>::check_data(const K& key, V& val) const{
     // array is exhausted
     size_t current_i = 0;
     for(size_t i = 0; i < this->_hash_size; i++){
-        current_i = dhash_f(key, current_i);
+        current_i = (this->hash_f(key) + i*dhash_f(key)) % this->_hash_size;
 //        current_i = (this->hash_f(key) + i*_hash_d) % this->_hash_size;
         if(this->data[current_i] != NULL && this->data[current_i]->key == key){
             val = this->data[current_i]->data;
@@ -115,6 +110,14 @@ size_t DoubleHash<K,V>::check_data(const K& key, V& val) const{
 
 template<class K, class V>
 V& DoubleHash<K,V>::operator [](const K& key){
-    return this->data[find(key)]->data;
+    try{
+        return this->data[find(key)]->data; //try find a key to access data
+    }catch(KeyException& e){
+        //KeyException means there was no corresponding key, therefore
+        // create a new index!
+        size_t i;
+        i = this->insert(key, V());
+        return this->data[i]->data;
+    }
 }
 #endif // DOUBLEHASH_H
