@@ -21,13 +21,16 @@ public:
     size_t find(const K& key, V &val) const;
     size_t find(const K& key) const;
     V& operator [](const K& key);
+    struct DataException: public exception{
+        const char* what() const throw(){return "No Vacancy Hash Map";}
+    };
     struct KeyException: public exception{
         const char* what() const throw(){return "Undefined Key";}
     };
 protected:
     size_t _hash_d;
 //    size_t hash_f(const K &key) const; //Hash based off of the hash_size
-    size_t dhash_f(const K& key) const; //hsah of _hash_d
+    size_t dhash_f(const K& key, const size_t& i) const; //hsah of _hash_d
     void change_data(const size_t& i, dictnode<K,V>*& dn); //changes data at i
     size_t check_data(const K& key, V& val) const;
 };
@@ -50,18 +53,19 @@ DoubleHash<K,V>& DoubleHash<K,V>::operator =(const DoubleHash<K, V> &copy){
 }
 
 template<class K, class V>
-size_t DoubleHash<K,V>::dhash_f(const K& key) const{
-    return (this->hash_f(key) + _hash_d) % this->_hash_size;
+size_t DoubleHash<K,V>::dhash_f(const K& key, const size_t& i) const{
+    return (this->hash_f(key) + i*_hash_d) % this->_hash_size;
 }
 
 template<class K, class V>
 size_t DoubleHash<K,V>::insert(const K &key, const V &val){
-    size_t current_i;
+    size_t current_i = 0;
     K k_c = key; //key current
     for(size_t i = 0; i < this->_hash_size; i++){
-        k_c = (K)dhash_f(k_c);
+        current_i = dhash_f(key, current_i);
+//        k_c = (K)dhash_f(k_c);
 //        current_i = (this->hash_f(key) + i*_hash_d) % this->_hash_size;
-        current_i = (size_t)k_c;
+//        current_i = (size_t)k_c;
         if(this->data[current_i] == NULL || this->data[current_i]->key == key){
             dictnode<K,V>* new_node = new dictnode<K,V>(key, val);
             change_data(current_i, new_node);
@@ -69,7 +73,7 @@ size_t DoubleHash<K,V>::insert(const K &key, const V &val){
         }
     }
     //end means there was no space left
-    return -1;
+    throw DataException();
 }
 
 template<class K, class V>
@@ -97,9 +101,10 @@ size_t DoubleHash<K,V>::check_data(const K& key, V& val) const{
     //changes based on using an open vs chained hash
     //Since this is open hash, we will check every index until the
     // array is exhausted
-    size_t current_i;
+    size_t current_i = 0;
     for(size_t i = 0; i < this->_hash_size; i++){
-        current_i = dhash_f((K)current_i);
+        current_i = dhash_f(key, current_i);
+//        current_i = (this->hash_f(key) + i*_hash_d) % this->_hash_size;
         if(this->data[current_i] != NULL && this->data[current_i]->key == key){
             val = this->data[current_i]->data;
             return current_i;
