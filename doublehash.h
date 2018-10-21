@@ -11,7 +11,7 @@
 template<class K, class V>
 class DoubleHash: public OpenHash<K,V>{
 public:
-    DoubleHash(size_t l=811, size_t m=809);
+    DoubleHash(size_t l=811);
     //Big3
 //    ~DoubleHash(); //Just uses base destructor
     DoubleHash(const DoubleHash<K,V>& copy);
@@ -36,7 +36,7 @@ protected:
 };
 
 template<class K, class V>
-DoubleHash<K,V>::DoubleHash(size_t l, size_t m)
+DoubleHash<K,V>::DoubleHash(size_t l)
         : OpenHash<K,V>(l){
 }
 
