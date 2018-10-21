@@ -45,6 +45,7 @@ public:
         //searches for key, and if found, places it in val
     bool find(const K& key, V& val) const;
     bool find(const K& key) const;
+    bool remove(const K& key);
     operator size_t() const;
     //FRIEND MEMBMER FUNCTIONSS;AFDS
     template<class U, class T>
@@ -156,5 +157,21 @@ template<class K, class V>
 OpenHash<K,V>::operator size_t() const{
     return _indeces;
 }
+
+template<class K, class V>
+bool OpenHash<K,V>::remove(const K& key){
+    size_t hash_i = hash_f(key);
+    size_t current_i;
+    for(size_t i = 0; i < _hash_size; i++){
+        current_i = (hash_i + i) % _hash_size;
+        if(data[current_i] != NULL && data[current_i]->key == key){
+            data[current_i] = NULL;
+            _indeces--;
+            return true;
+        }
+    }
+    return false; //default, didn't remove anything
+}
+
 
 #endif // DICTIONARY_H
