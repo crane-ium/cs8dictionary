@@ -74,7 +74,7 @@ HashList<T>::~HashList(){
     }
 }
 template<class T>
-HashList<T>::HashList(const HashList<T>& copy){
+HashList<T>::HashList(const HashList<T>& copy):HashList(){
     HashNode<T>** this_w = &_head;
     for(HashNode<T>* w = copy._head; w != NULL; w = w->next){
         (*this_w) = new HashNode<T>(w->key,w->data,w->skey);
@@ -133,7 +133,8 @@ template<typename T>
 ostream& operator <<(ostream& outs, HashList<T>& list){
     HashNode<T>* walker = list._head;
     while(walker != NULL){
-        outs << "[" << (*walker) << "] -> ";
+        outs << "["
+             << (*walker) << "] -> ";
         walker = walker->next;
     }
     outs << "|||";
