@@ -53,8 +53,25 @@ ChainHash<T>::~ChainHash(){
     delete[] _hlist;
 }
 
-//ChainHash(const ChainHash<T>& copy);
-//ChainHash<T>& operator =(const ChainHash<T>& copy);
+template<class T>
+ChainHash<T>::ChainHash(const ChainHash<T>& copy){
+    _prime = copy._prime;
+    _size = copy._size;
+    _hlist = new HashList<T>[_prime];
+    for(size_t i = 0; i < _prime; i++){
+        _hlist[i] = copy._hlist[i];
+    }
+}
+template<class T>
+ChainHash<T>& ChainHash<T>::operator =(const ChainHash<T>& copy){
+    if(this == &copy)
+        return (*this);
+    ChainHash<T> temp(copy);
+    swap(_prime, temp._prime);
+    swap(_size, temp._size);
+    swap(_hlist, temp._hlist);
+    return(*this);
+}
 
 template<class T>
 size_t ChainHash<T>::insert(const size_t& k, const T& d, const string& s){
@@ -96,9 +113,18 @@ size_t ChainHash<T>::insert(const string& s, const T& d){
     this->insert(num, d, s);
     return num;
 }
-
-//size_t remove(const size_t& k);
-//size_t remove(const string& s);
+template<class T>
+size_t ChainHash<T>::remove(const size_t& k){
+    size_t i = hash_f(k);
+    _hlist[i].remove(k);
+    return i;
+}
+template<class T>
+size_t ChainHash<T>::remove(const string& s){
+    size_t i = string_hash(s);
+    _hlist[i].remove(s);
+    return i;
+}
 template<class T>
 T& ChainHash<T>::operator [](const size_t& k){
     size_t i = hash_f(k);

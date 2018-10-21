@@ -24,8 +24,10 @@ int main()
     chain["new"] = 321;
     chain[123] = 111111;
     chain[124] = 222222;
+    chain[124]++;
     chain[124];
     chain[125];
+    chain.remove(125);
     cout << chain << endl;
     ChainHash<string> schain(17);
     schain["First1"] = "Hello";
@@ -34,6 +36,18 @@ int main()
     schain["Fourth"] = "!";
     schain["(!JCZ(ps..m]    \""] = "CRAZY";
     cout << schain << endl;
+    ChainHash<string> copy1(schain);
+    copy1[0] = "zero";
+    copy1["SMALL ADDITIONS"] = "noice";
+    cout << copy1 << endl;
+    ChainHash<string> copy2;
+    copy2["before"] = "WORSE?";
+    copy2 = copy1;
+    copy2["after"] = "BETTER?";
+    copy2.remove("after");
+    copy2.remove("before"); //should have no effect
+
+    cout << copy2 << endl;
     return 0;
 }
 

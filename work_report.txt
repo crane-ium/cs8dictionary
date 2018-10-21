@@ -8,20 +8,21 @@ Major Bugs:
 
 ---- MINOR ----
 Minor Issues:
--Want to solve to get string auto parsed into size_t for easy hashing
-
 Minor Bugs:
 
 ---- OTHER ----
 Notes:
 
 Goals:
--Want to encompass everything into a user-friendly dict, like python
 -Want to have control like a vector also
--overload [] operators to access keys easily both by string
 
 Current Goal:
 Add a clock timer
 Setup Double hash
 Setup inheritance
 setupf ind
+
+Done:
+-Want to encompass everything into a user-friendly dict, like python
+-overload [] operators to access keys easily both by string
+
