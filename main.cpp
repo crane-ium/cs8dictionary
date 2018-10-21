@@ -111,6 +111,9 @@ int main()
     elapsed = (t_end.QuadPart - t_start.QuadPart) * 1000.0 / frequency.QuadPart;
     cout << "Double find took " << elapsed << " milliseconds\n";
 
+    cout << "Open Hash Map Length:   " << (int)open_test << endl;
+    cout << "Double Hash Map Length: " << (int)double_test << endl;
+
     //Test indexing
     DoubleHash<int,string> dh4(11);
     dh4[1] = "Test";

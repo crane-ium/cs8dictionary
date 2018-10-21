@@ -17,14 +17,14 @@ public:
     DoubleHash(const DoubleHash<K,V>& copy);
     DoubleHash<K,V>& operator =(const DoubleHash<K,V>& copy);
     //MOD MEMBER FUNCTOINS
-    size_t insert(const K &key, const V& val);
-    size_t find(const K& key, V &val) const;
-    size_t find(const K& key) const;
+    size_t insert(const K &key, const V& val); //inserts paired key:val
+    size_t find(const K& key, V &val) const; //returns index key occurs at else error
+    size_t find(const K& key) const; //find without giving back a val
     V& operator [](const K& key);
-    struct DataException: public exception{
+    struct DataException: public exception{ //Don't allow excess indeces
         const char* what() const throw(){return "No Vacancy Hash Map";}
     };
-    struct KeyException: public exception{
+    struct KeyException: public exception{ //accessing an undefined key
         const char* what() const throw(){return "Undefined Key";}
     };
 protected:
@@ -86,9 +86,11 @@ template<class K, class V>
 void DoubleHash<K,V>::change_data(const size_t& i, dictnode<K,V>*& dn){
     //This is important so it makes the hash function more flexible later
     // if we swap this to accept a chain hash
-    delete this->data[i];
+    if(this->data[i] == NULL)
+        this->_indeces++;
+    else
+        delete this->data[i];
     this->data[i] = dn;
-    this->_indeces++;
 }
 
 template<class K, class V>

@@ -105,9 +105,11 @@ bool OpenHash<K, V>::insert(const K &key, const V &val){
         current_i = (index + i) % _hash_size;
         if(data[current_i] == NULL || data[current_i]->key == key){
             dictnode<K,V>* new_dn = new dictnode<K,V>(key,val);
-            delete data[current_i];
+            if(data[current_i] == NULL)
+                _indeces++;\
+            else
+                delete data[current_i];
             data[current_i] = new_dn;
-            _indeces++;
             return true;
         }
     }
