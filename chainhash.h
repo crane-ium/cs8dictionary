@@ -32,6 +32,7 @@ public:
     //Return a reference to a data so it can be added or altered!
     T& operator [](const size_t& k);
     T& operator [](const string& s);
+    size_t length() const;
     //FRIENDS
     template<class U>
     friend ostream& operator <<(ostream& outs, ChainHash<U>& hash);
@@ -77,6 +78,7 @@ template<class T>
 size_t ChainHash<T>::insert(const size_t& k, const T& d, const string& s){
     size_t i = hash_f(k);
     _hlist[i].insert(k, d, s);
+    _size++;
     return i;
 }
 
@@ -116,13 +118,15 @@ size_t ChainHash<T>::insert(const string& s, const T& d){
 template<class T>
 size_t ChainHash<T>::remove(const size_t& k){
     size_t i = hash_f(k);
-    _hlist[i].remove(k);
+    if(_hlist[i].remove(k))
+        _size--;
     return i;
 }
 template<class T>
 size_t ChainHash<T>::remove(const string& s){
     size_t i = string_hash(s);
-    _hlist[i].remove(s);
+    if(_hlist[i].remove(s))
+        _size--;
     return i;
 }
 template<class T>
@@ -133,6 +137,7 @@ T& ChainHash<T>::operator [](const size_t& k){
         return (*node)->data;
     else{
         (*node) = new HashNode<T>(k);
+        _size++;
         return (*node)->data;
     }
 }
@@ -144,9 +149,14 @@ T& ChainHash<T>::operator [](const string& s){
         return (*node)->data;
     else{
         (*node) = new HashNode<T>(size_t(), T(), s);
+        _size++;
         return (*node)->data;
     }
 }
 
+template<class T>
+size_t ChainHash<T>::length() const{
+    return _size;
+}
 
 #endif // CHAINHASH_H

@@ -47,11 +47,13 @@ public:
     bool find(const K& key) const;
     bool remove(const K& key);
     operator size_t() const;
+    size_t length() const;
+    size_t collisions() const; //counts collisions that occured in insertion
     //FRIEND MEMBMER FUNCTIONSS;AFDS
     template<class U, class T>
     friend ostream& operator <<(ostream& outs, const OpenHash<U,T>& dict);
 protected:
-    size_t _hash_size, _indeces; //hash_size better be prime or u have problems
+    size_t _hash_size, _indeces, _collisions; //hash_size better be prime or u have problems
         //Stores data in array of dictnode pointers so u can check for NULL
         // rather than using a 2nd array to check
     dictnode<K,V>** data;
@@ -60,7 +62,7 @@ protected:
 };
 
 template<class K, class V>
-OpenHash<K,V>::OpenHash(size_t length):_hash_size(length),_indeces(0){
+OpenHash<K,V>::OpenHash(size_t length):_hash_size(length),_indeces(0),_collisions(0){
     data = new dictnode<K,V>*[_hash_size];
     for(size_t i = 0; i < _hash_size; i++)
         data[i] = NULL;
@@ -75,7 +77,8 @@ OpenHash<K,V>::~OpenHash(){
 
 template<class K, class V>
 OpenHash<K,V>::OpenHash(const OpenHash &copy)
-        : _hash_size(copy._hash_size), _indeces(copy._indeces){
+        : _hash_size(copy._hash_size), _indeces(copy._indeces)
+        , _collisions(copy._collisions){
     this->data = new dictnode<K,V>*[_hash_size];
     for(size_t i = 0; i < copy._hash_size; i++){
         if(copy.data[i] != NULL){
@@ -92,6 +95,7 @@ OpenHash<K,V>& OpenHash<K,V>::operator =(const OpenHash<K,V>& copy){
     OpenHash<K,V> temp(copy);
     swap(this->_hash_size,temp._hash_size);
     swap(this->_indeces, temp._indeces);
+    swap(this->_collisions, temp._collisions);
     swap(this->data, temp.data);
     return (*this);
 }
@@ -113,6 +117,7 @@ bool OpenHash<K, V>::insert(const K &key, const V &val){
             data[current_i] = new_dn;
             return true;
         }
+        _collisions++;
     }
     //Reaches end means no space for new data
     return false;
@@ -146,9 +151,16 @@ size_t OpenHash<K,V>::hash_f(const K& key) const{
 template<class K, class V>
 ostream& operator <<(ostream& outs, const OpenHash<K,V>& dict){
     for(size_t i = 0; i < dict._hash_size; i++){
-        if(dict.data[i] != NULL)
+        if(dict.data[i] != NULL || dict._hash_size < 20){
             outs << "[" << setw(4) << setfill('0') << i <<setfill(' ')
-                 << "]  " << (*dict.data[i]) << endl;
+                 << "]  ";
+            if(dict.data[i] != NULL){
+                outs << (*dict.data[i]);
+                if(dict.hash_f(dict.data[i]->key) != i)
+                    outs << " *";
+            }
+            outs << endl;
+        }
     }
     return outs;
 }
@@ -173,5 +185,13 @@ bool OpenHash<K,V>::remove(const K& key){
     return false; //default, didn't remove anything
 }
 
+template<class K, class V>
+size_t OpenHash<K,V>::collisions() const{
+    return _collisions;
+}
+template<class K, class V>
+size_t OpenHash<K,V>::length() const{
+    return _indeces;
+}
 
 #endif // DICTIONARY_H

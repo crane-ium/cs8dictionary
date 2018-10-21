@@ -66,6 +66,7 @@ size_t DoubleHash<K,V>::insert(const K &key, const V &val){
             change_data(current_i, new_node);
             return current_i;
         }
+        this->_collisions++;
     }
     //end means there was no space left
     throw DataException();
