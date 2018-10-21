@@ -18,16 +18,28 @@ struct HashNode{
                 : next(n), key(k)
                 , skey(s), data(d){}
 
+    HashNode<T>* next;
     size_t key;
     string skey; //if given, use a string as a key instead (key still serves as reference)
     T data;
-    HashNode<T>* next;
+    template<class U>
+    friend bool operator ==(const HashNode<U>& lhs, const HashNode<U>& rhs);
     friend ostream& operator <<(ostream& outs, HashNode<T>& node){
         outs << ((node.skey=="") ? (to_string(node.key)) : ("\""+node.skey+"\""))
              << " : " << node.data;
         return outs;
     }
 };
+
+template<class T>
+bool operator ==(const HashNode<T>& lhs, const HashNode<T>& rhs){
+    if(lhs.skey != "" && lhs.skey == rhs.skey)
+        return true;
+    else if(lhs.skey == "" && rhs.skey == "" && lhs.key==rhs.key)
+        return true;
+    else
+        return false;
+}
 
 template<class T>
 class HashList{
@@ -124,14 +136,15 @@ ostream& operator <<(ostream& outs, HashList<T>& list){
         outs << "[" << (*walker) << "] -> ";
         walker = walker->next;
     }
-    outs << "|||" << endl;
+    outs << "|||";
     return outs;
 }
 template<class T>
 HashNode<T>** HashList<T>::find(const size_t& k){
     HashNode<T>** walker = &this->_head;
     while((*walker) != NULL){
-        if((*walker)->key == k){
+        //the skey MUST be blank otherwise u can overwrite the wrong index
+        if((*walker)->skey == "" && (*walker)->key == k){
             return walker;
         }
         walker = &(*walker)->next;

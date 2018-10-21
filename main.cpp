@@ -2,18 +2,46 @@
 #include "openhash.h"
 #include "../prime_generator/prime_generator.h"
 #include "doublehash.h"
-#include "Windows.h"
+#include "Windows.h" //For timer QueryPerformanceFrequency/Counter
 #include <random>
 #include <time.h>
+#include "hashlist.h"
+#include "chainhash.h"
 
 using namespace std;
 
+void old_test();
+
 int main()
 {
+    ChainHash<int> chain(13);
+    chain.insert(1000, 123);
+    chain.insert(":)", 123);
+    cout << chain << endl;
+    cout << chain[":)"] << endl;
+    chain[":)"] = 1234;
+    cout << chain[":)"] << endl;
+    chain["new"] = 321;
+    chain[123] = 111111;
+    chain[124] = 222222;
+    chain[124];
+    chain[125];
+    cout << chain << endl;
+    ChainHash<string> schain(17);
+    schain["First1"] = "Hello";
+    schain["Second"] = ", ";
+    schain["Third"] = "World";
+    schain["Fourth"] = "!";
+    schain["(!JCZ(ps..m]    \""] = "CRAZY";
+    cout << schain << endl;
+    return 0;
+}
+
+void old_test(){
     prime_generator gen;
     long int prime = gen.get_prime(1000);
     OpenHash<int,string> dict(prime);
-    DoubleHash<int,string> dh(11,13);
+    DoubleHash<int,string> dh(11);
 
     dict.insert(5,"data1");
     dict.insert(1500, "RANDOM DATA");
@@ -36,7 +64,7 @@ int main()
 //    dh = dynamic_cast<OpenHash<int,string> >(aDict);
     dh.insert(100, "doublehash");
     cout << dh << endl;
-    DoubleHash<int,string> dh2(11,13);
+    DoubleHash<int,string> dh2(11);
 //    dh2 = dh;
     dh2.insert(1, "dh2");
     dh2.insert(12, "test");
@@ -68,7 +96,6 @@ int main()
     double elapsed;
 
     size_t prime1 = gen.get_prime(15000);
-    size_t prime2 = gen.get_prime(prime1-1);
 //    size_t prime3 = gen.get_prime(150);
     size_t iterations = 10000;
     size_t* randkeys = new size_t[iterations];
@@ -76,7 +103,7 @@ int main()
     for(size_t i = 0; i < iterations; i++)
         randkeys[i] = rand();
     OpenHash<int,string> open_test(prime1);
-    DoubleHash<int,string> double_test(prime1, prime2);
+    DoubleHash<int,string> double_test(prime1);
     //TEST OPEN HASH
     QueryPerformanceFrequency(&frequency);
     QueryPerformanceCounter(&t_start);
@@ -121,12 +148,9 @@ int main()
     dh4[1] = "Retest";
     dh4[3] = "no dupe";
     dh4[4]; //set a blank data
+    dh4.remove(1); //remove "Test"
     cout << dh4;
-
-    return 0;
 }
-
-
 
 
 
