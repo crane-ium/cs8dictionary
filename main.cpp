@@ -50,13 +50,14 @@ int main()
 }
 
 void test_hash_map_interactive(const char& c){
+    int SIZE = 7;
     char input = ' ';
     int k;
     string s;
     string val;
     //tests Open, Double, and Chained Hash Maps
     if(c=='o'){
-        OpenHash<int, string> open(17);
+        OpenHash<int, string> open(SIZE);
         while(input!='x'){
             cout << "OPEN HASH TEST" << endl;
             input = menu();
@@ -115,7 +116,7 @@ void test_hash_map_interactive(const char& c){
             cout << open << endl;
         }
     }else if(c=='d'){
-        DoubleHash<int, string> d_hash(17);
+        DoubleHash<int, string> d_hash(SIZE);
         while(input!='x'){
             cout << "---- d_hash HASH TEST ----" << endl;
             input = menu();
@@ -189,7 +190,7 @@ void test_hash_map_interactive(const char& c){
             cout << d_hash << endl;
         }
     }else if(c=='c'){
-        ChainHash<string> chain(17);
+        ChainHash<string> chain(SIZE);
         string k;
         while(input!='x'){
             cin.clear();
@@ -270,7 +271,7 @@ char menu(){
     fflush(stdin);
     cout << "[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :";
     cin >> input;
-    if(string("sirdf?x").find(tolower(input),0))
+    if(string(" sirdf?x").find(tolower(input)))
         return input;
     else
         return menu();
