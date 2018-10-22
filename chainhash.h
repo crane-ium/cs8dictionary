@@ -40,7 +40,7 @@ public:
     //FRIENDS
     template<class U>
     friend ostream& operator <<(ostream& outs, ChainHash<U>& hash);
-private:
+protected:
     size_t _prime, _size;
     HashList<T>* _hlist;
     size_t hash_f(const size_t& k) const;
