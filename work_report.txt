@@ -3,7 +3,8 @@ Major Issues:
 -Is double hash fast enough??? It's roughly the same speed except
  that double hash has some more complexities going on that might slow it
   -It does take less collisions to input same elements!
-
+-AVL is not efficient :(
+    -FIX THAT!!! MAYBE SOMEDAY!!!
 
 Major Bugs:
 
@@ -13,6 +14,7 @@ Minor Bugs:
 
 ---- OTHER ----
 Notes:
+-If a duplicate key is inserted, it overwrites the previous key
 
 Goals:
 -Want to have control like a vector also

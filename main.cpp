@@ -8,6 +8,7 @@
 #include <time.h>
 #include "hashlist.h"
 #include "chainhash.h"
+#include "avlhash.h"
 
 using namespace std;
 
@@ -26,7 +27,7 @@ string choose_skey();
 
 int main()
 {
-    second_test();
+//    second_test();
     old_test();
     cout << endl;
     timer_test(); //timed test of open vs double hash maps
@@ -35,17 +36,57 @@ int main()
     prime_generator pgen;
     size_t prime = pgen.get_prime(1100); //generate a prime < 1100
     ChainHash<string> chain_test(13);
+    avlHash<string> avl_test(13);
     OpenHash<int,string> open_test(prime);
     DoubleHash<int,string> double_test(prime);
     srand(time(NULL));
     test_hash_map_random(open_test, 1000, "Open Test");
-    test_hash_map_random(chain_test, 1000, "Chain Test");
     test_hash_map_random(double_test, 1000, "Double Test");
     cout << "Open Test collisions: " << open_test.collisions() << endl;
     cout << "Double Test collisions: " << double_test.collisions() << endl;
 
+    //Timer fold
+    {
+        LARGE_INTEGER frequency;
+        LARGE_INTEGER t_start, t_end;
+        double elapsed;
+        QueryPerformanceFrequency(&frequency);
+        QueryPerformanceCounter(&t_start);
+        test_hash_map_random(chain_test, 1000, "Chain Test");
+        QueryPerformanceCounter(&t_end);
+        elapsed = (t_end.QuadPart - t_start.QuadPart) * 1000.0 / frequency.QuadPart;
+        cout << "Chain hash took " << elapsed << " milliseconds\n";
+        QueryPerformanceCounter(&t_start);
+        test_hash_map_random(avl_test, 1000, "AVL HASH TEST");
+        QueryPerformanceCounter(&t_end);
+        elapsed = (t_end.QuadPart - t_start.QuadPart) * 1000.0 / frequency.QuadPart;
+        cout << "avl hash took " << elapsed << " milliseconds";
+        cout << endl;
+    }
     char c = choose_test();
     test_hash_map_interactive(c);
+
+////    ChainHash<string> chain_ex(17);
+////    chain_ex["string"] = "string data";
+////    chain_ex[1] = "also string data";
+////    chain_ex["str"];
+////    chain_ex["string"] = "new string data";
+////    cout << chain_ex["string"] << endl;
+
+////    cout << chain_ex << endl;
+//    avlHash<int> avl_hash(13);
+//    avl_hash["string"] = 1;
+//    avl_hash["test"] = 2;
+//    avl_hash[1] = 123;
+//    avl_hash[14] = 14;
+//    avl_hash[27] = 27;
+//    cout << avl_hash << endl;
+//    avl_hash.remove(14);
+//    avl_hash.remove(27);
+//    avl_hash.remove(1);
+//    avl_hash.remove("string");
+//    cout << avl_hash << endl;
+
     return 0;
 }
 
@@ -250,6 +291,67 @@ void test_hash_map_interactive(const char& c){
             }
             cout << chain << endl;
         }
+    }else if(c=='a'){
+        avlHash<string> avl_hash(SIZE);
+        string k;
+        while(input!='x'){
+            cin.clear();
+            fflush(stdin);
+            cout << "avl_hash HASH TEST (Note: Uses string keys!)" << endl;
+            input = menu();
+            switch(input){
+            case 'i':
+                k = choose_skey();
+                s = choose_data();
+                avl_hash[k] = s;
+                cout << k << ":" << s << " has been inserted\n";
+                break;
+            case 'd':
+                k = choose_skey();
+                if(avl_hash.remove(k))
+                    cout << k << " was removed\n";
+                else
+                    cout << "Cannot remove " << k << ", cannot find\n";
+                break;
+            case 's':
+                cout << "Size: " << avl_hash.length() << endl;
+                break;
+            case 'f':
+                k = choose_skey();
+                if(avl_hash.find(k, val))
+                    cout << k << ":" << val << " was found\n";
+                else
+                    cout << k << " could not be located\n";
+                break;
+            case 'r':{
+                string rs1 = "", rs2 = ""; //rand string
+                size_t rsl = 2 + rand() % 20; //rand string length
+                for(size_t i = 0; i < rsl; i++){
+                    rs1 += char(48 + rand() % 74);
+                }
+                rsl = 2 + rand() % 20; //rand string length
+                for(size_t i = 0; i < rsl; i++){
+                    rs2 += char(48 + rand() % 74);
+                }
+                avl_hash[rs1] = rs2;
+                cout << rs1 << " : " << rs2 << " has been inserted\n";
+                break;
+            }
+            case '?':
+                k = choose_skey();
+                if(avl_hash.exists(k))
+                    cout << k << " exists\n";
+                else
+                    cout << k << " does not exist\n";
+                break;
+            case 'x':
+                cout << "BYE BYE!\n";
+                break;
+            default:
+                break;
+            }
+            cout << avl_hash << endl;
+        }
     }
 }
 template<class T>
@@ -307,11 +409,12 @@ int choose_key(){
 }
 char choose_test(){
     char input;
-    cout << "[O]pen [D]ouble [C]hained Interactive Test: ";
+    cout << "[O]pen [D]ouble [C]hained [A]vlChain Interactive Test: ";
     cin >> input;
     cin.clear();
     fflush(stdin);
-    if(tolower(input) == 'o' || tolower(input) == 'd' || tolower(input) == 'c')
+    if(tolower(input) == 'o' || tolower(input) == 'd'
+            || tolower(input) == 'c' || tolower(input) == 'a')
         return tolower(input);
     else return choose_test();
 }
