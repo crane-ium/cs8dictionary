@@ -1,0 +1,274 @@
+[00000]: |||
+[00001]: |||
+[00002]: |||
+[00003]: |||
+[00004]: |||
+[00005]: |||
+[00006]: |||
+[00007]: |||
+[00008]: [":)" : 123] -> |||
+[00009]: |||
+[00010]: |||
+[00011]: |||
+[00012]: [1000 : 123] -> |||
+
+[00000]: |||
+[00001]: |||
+[00002]: |||
+[00003]: |||
+[00004]: |||
+[00005]: ["new" : 321] -> |||
+[00006]: [123 : 111111] -> |||
+[00007]: [124 : 222223] -> |||
+[00008]: [":)" : 1234] -> |||
+[00009]: |||
+[00010]: |||
+[00011]: |||
+[00012]: [1000 : 123] -> |||
+
+[00000]: |||
+[00001]: |||
+[00002]: |||
+[00003]: ["Fourth" : !] -> |||
+[00004]: |||
+[00005]: |||
+[00006]: |||
+[00007]: ["(!JCZ(ps..m]    "" : CRAZY] -> |||
+[00008]: ["First1" : Hello] -> |||
+[00009]: ["Second" : , ] -> |||
+[00010]: |||
+[00011]: |||
+[00012]: |||
+[00013]: |||
+[00014]: ["Third" : World] -> |||
+[00015]: |||
+[00016]: |||
+
+[00000]: [0 : zero] -> |||
+[00001]: |||
+[00002]: |||
+[00003]: ["Fourth" : !] -> |||
+[00004]: |||
+[00005]: |||
+[00006]: |||
+[00007]: ["(!JCZ(ps..m]    "" : CRAZY] -> |||
+[00008]: ["First1" : Hello] -> |||
+[00009]: ["Second" : , ] -> ["SMALL ADDITIONS" : noice] -> |||
+[00010]: |||
+[00011]: |||
+[00012]: |||
+[00013]: |||
+[00014]: ["Third" : World] -> |||
+[00015]: |||
+[00016]: |||
+
+[00000]: [0 : zero] -> |||
+[00001]: |||
+[00002]: |||
+[00003]: ["Fourth" : !] -> |||
+[00004]: |||
+[00005]: |||
+[00006]: |||
+[00007]: ["(!JCZ(ps..m]    "" : CRAZY] -> |||
+[00008]: ["First1" : Hello] -> |||
+[00009]: ["Second" : , ] -> ["SMALL ADDITIONS" : noice] -> |||
+[00010]: |||
+[00011]: |||
+[00012]: |||
+[00013]: |||
+[00014]: ["Third" : World] -> |||
+[00015]: |||
+[00016]: |||
+
+[0000]
+[0001]  [100]: doublehash
+[0002]
+[0003]
+[0004]
+[0005]
+[0006]
+[0007]
+[0008]
+[0009]
+[0010]
+
+[0000]  [11]: 11
+[0001]  [1]: dh2
+[0002]  [115]: testing 5 *
+[0003]  [36]: test2
+[0004]  [3]: 3 *
+[0005]  [12]: test *
+[0006]  [200]: two-hundred *
+[0007]  [13]: 13 *
+[0008]  [65]: 65 *
+[0009]  [150]: 150 *
+[0010]  [71]: testing 5 *
+
+11
+two-hundred
+new value
+Oops
+No Vacancy Hash Map
+[0000]
+[0001]
+[0002]
+[0003]  [100]: test2 *
+[0004]  [4]:
+[0005]
+[0006]
+[0007]  [3]: no dupe *
+[0008]
+[0009]
+[0010]
+dh4 collisions: 2
+
+Open hash took 1.83235 milliseconds with 5047 collisions
+Double hash took 1.99606 milliseconds with 3350 collisions
+Open find took 0.609855 milliseconds with 5047 collisions
+Double find took 0.406261 milliseconds with 3350 collisions
+Open Hash Map Length:   8597
+Double Hash Map Length: 8597
+
+----- Open Test ------
+Indeces: 983
+----- Chain Test ------
+Indeces: 1000
+----- Double Test ------
+Indeces: 983
+Open Test collisions: 4270
+Double Test collisions: 1493
+[O]pen [D]ouble [C]hained Interactive Test: d
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :r
+22182:LZ\PNB<Iaw\f@u2pVQ has been inserted
+[0000]
+[0001]
+[0002]
+[0003]
+[0004]
+[0005]
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :r
+16519:F26>88Kyrr@` has been inserted
+[0000]
+[0001]
+[0002]
+[0003]
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :r
+29044:uXfv79 has been inserted
+[0000]
+[0001]  [29044]: uXfv79
+[0002]
+[0003]
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :r
+11408:S2QH9^aiR6`JPZ1: has been inserted
+[0000]
+[0001]  [29044]: uXfv79
+[0002]
+[0003]
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :i 100 :)
+100::) has been inserted
+[0000]
+[0001]  [29044]: uXfv79
+[0002]  [100]: :)
+[0003]
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :i 7 its_working_well
+7:its_working_well has been inserted
+[0000]  [7]: its_working_well
+[0001]  [29044]: uXfv79
+[0002]  [100]: :)
+[0003]
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :r
+7505:ZZu`K8cGYVc4lW has been inserted
+[0000]  [7]: its_working_well
+[0001]  [29044]: uXfv79
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :i 10 Won'tWorkButGetsCaught
+No Vacancy Hash Map
+NO SPACE LEFT!!!
+[0000]  [7]: its_working_well
+[0001]  [29044]: uXfv79
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :d 29044
+29044 was removed
+[0000]  [7]: its_working_well
+[0001]
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :f 7505
+7505:ZZu`K8cGYVc4lW was found!
+[0000]  [7]: its_working_well
+[0001]
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :? 16519
+16519 does exist
+[0000]  [7]: its_working_well
+[0001]
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+---- d_hash HASH TEST ----
+[S]ize() [I]nsert [R]andom [D]elete [F]ind value [?]exists?   e[X]it  :x
+BYE BYE!
+[0000]  [7]: its_working_well
+[0001]
+[0002]  [100]: :)
+[0003]  [7505]: ZZu`K8cGYVc4lW *
+[0004]  [16519]: F26>88Kyrr@` *
+[0005]  [11408]: S2QH9^aiR6`JPZ1:
+[0006]  [22182]: LZ\PNB<Iaw\f@u2pVQ
+
+Press <RETURN> to close this window...
