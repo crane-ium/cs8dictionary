@@ -43,11 +43,11 @@ public:
     //MOD MEMBER FUNCTIONS
     bool insert(const K& key, const V& val);
         //searches for key, and if found, places it in val
-    bool find(const K& key, V& val) const;
+    bool find(const K& key, V& val) const; //find and return a val
     bool find(const K& key) const;
-    bool remove(const K& key);
-    operator size_t() const;
-    size_t length() const;
+    bool remove(const K& key); //remove based on key
+    operator size_t() const; //overloaded type casting, returns length
+    size_t length() const; //returns number of inserted indeces
     size_t collisions() const; //counts collisions that occured in insertion
     //FRIEND MEMBMER FUNCTIONSS;AFDS
     template<class U, class T>
