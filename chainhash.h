@@ -29,6 +29,10 @@ public:
     size_t insert(const string& s, const T& d); //insert string key
     size_t remove(const size_t& k); //remove size_t key
     size_t remove(const string& s);
+    bool find(const size_t& k, T& d) const;
+    bool find(const string& s, T& d) const;
+    bool exists(const size_t& k) const;
+    bool exists(const string& s) const;
     //Return a reference to a data so it can be added or altered!
     T& operator [](const size_t& k);
     T& operator [](const string& s);
@@ -128,6 +132,32 @@ size_t ChainHash<T>::remove(const string& s){
     if(_hlist[i].remove(s))
         _size--;
     return i;
+}
+template<class T>
+bool ChainHash<T>::find(const size_t& k, T& d) const{
+    size_t i = hash_f(k);
+    HashNode<T>* node = (*_hlist[i].find(k));
+    if(node != NULL)
+        d = node->data;
+    return (node != NULL);
+}
+template<class T>
+bool ChainHash<T>::find(const string& s, T& d) const{
+    size_t i = string_hash(s);
+    HashNode<T>* node = (*_hlist[i].find(s));
+    if(node != NULL)
+        d = node->data;
+    return (node != NULL);
+}
+template<class T>
+bool ChainHash<T>::exists(const size_t& k) const{
+    T temp;
+    return find(k, temp);
+}
+template<class T>
+bool ChainHash<T>::exists(const string& s) const{
+    T temp;
+    return find(s, temp);
 }
 template<class T>
 T& ChainHash<T>::operator [](const size_t& k){
